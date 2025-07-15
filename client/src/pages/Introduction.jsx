@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavigationBar from './NavigationBar'; // Adjust path as needed
+import NavigationBar from './NavigationBar';
 
 export default function Introduction() {
   const navigate = useNavigate();

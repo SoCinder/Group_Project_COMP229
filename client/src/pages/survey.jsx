@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import NavigationBar from './NavigationBar'; // Adjust path as needed
+import { useNavigate } from 'react-router-dom';
+import NavigationBar from './NavigationBar';
 
 export default function SurveyPage() {
   const [salary, setSalary] = useState('');
@@ -9,20 +10,25 @@ export default function SurveyPage() {
   const [transport, setTransport] = useState('');
   const [savings, setSavings] = useState('');
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const responses = { salary, saveMore, groceries, dining, transport, savings };
     console.log('Survey responses:', responses);
-    alert('Thank you for completing the survey!');
+
+    // Navigate to thank you page
+    navigate('/thank-you');
   };
 
   return (
     <div>
       <NavigationBar />
       <div className="survey-page" style={{ maxWidth: '800px', margin: '2rem auto', padding: '1rem', fontFamily: 'sans-serif' }}>
-        <h1 style={{ textAlign: 'center', marginBottom: '2rem' }}>Canadians Spending Habits: Now vs. 2 Years Ago</h1>
+        <h1 style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          Canadians Spending Habits: Now vs. 2 Years Ago
+        </h1>
         <form onSubmit={handleSubmit}>
-
           <div className="form-group" style={{ border: 'none', marginBottom: '1.5rem' }}>
             <label htmlFor="salary" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
               1. What is your yearly salary?
