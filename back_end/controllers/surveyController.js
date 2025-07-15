@@ -47,3 +47,23 @@ exports.deleteSurvey = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+exports.submitSurveyResponse = async (req, res) => {
+  const surveyId = req.params.id;
+  const { answers } = req.body;
+
+  try {
+    const survey = await Survey.findById(surveyId);
+    if (!survey) {
+      return res.status(404).json({ error: 'Survey not found' });
+    }
+
+    survey.responses.push({ answers });
+    await survey.save();
+
+    res.status(200).json({ message: 'Response submitted successfully' });
+  } catch (err) {
+    console.error('Error submitting survey response:', err);
+    res.status(500).json({ error: 'Failed to submit response' });
+  }
+};

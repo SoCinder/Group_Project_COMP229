@@ -6,9 +6,15 @@ const questionSchema = new mongoose.Schema({
   options: [String]
 });
 
+const responseSchema = new mongoose.Schema({
+  answers: [{ value: String }],
+  createdAt: { type: Date, default: Date.now }
+});
+
 const surveySchema = new mongoose.Schema({
   title: { type: String, required: true },
   questions: [questionSchema],
+  responses: [responseSchema],
   createdAt: { type: Date, default: Date.now }
 });
 

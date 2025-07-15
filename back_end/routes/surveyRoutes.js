@@ -4,7 +4,8 @@ const {
   getSurveys,
   getSurveyById,
   updateSurvey,
-  deleteSurvey
+  deleteSurvey,
+  submitSurveyResponse
 } = require('../controllers/surveyController');
 
 const router = express.Router();
@@ -17,5 +18,7 @@ router.route('/:id')
   .get(getSurveyById)
   .put(updateSurvey)
   .delete(deleteSurvey);
+
+router.post('/:id/response', submitSurveyResponse);
 
 module.exports = router;

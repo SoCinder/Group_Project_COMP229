@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from './NavigationBar';
+import axios from 'axios';
 
 export default function SurveyPage() {
   const [salary, setSalary] = useState('');
@@ -12,14 +13,34 @@ export default function SurveyPage() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const responses = { salary, saveMore, groceries, dining, transport, savings };
-    console.log('Survey responses:', responses);
+
+    const responses = {
+      answers: [
+        { value: salary },
+        { value: saveMore },
+        { value: groceries },
+        { value: dining },
+        { value: transport },
+        { value: savings }
+      ]
+    };
+
+    try {
+    const res = await axios.post(
+      'http://localhost:5000/api/surveys/68759ebb708e5b75333c5b5d/response',
+      responses
+    );
+
+    console.log('Response submitted:', res.data);
 
     // Navigate to thank you page
     navigate('/thank-you');
-  };
+  } catch (err) {
+    console.error('Error submitting response:', err.response?.data || err.message);
+  }
+};
 
   return (
     <div>
@@ -173,4 +194,5 @@ export default function SurveyPage() {
       </div>
     </div>
   );
-}
+};
+
