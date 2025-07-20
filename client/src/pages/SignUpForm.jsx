@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-export default function LoginForm() {
+export default function SignUpForm() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ email: '', password: '' });
+  const [form, setForm] = useState({ name: '', email: '', password: '' });
 
   const handle = (e) => {
     const { name, value } = e.target;
@@ -15,8 +16,15 @@ export default function LoginForm() {
 
   const submit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', form);
-    navigate('/');
+    try {
+      // Optional: send data to your backend API
+      // await axios.post('http://localhost:5000/api/users', form);
+
+      console.log('Form submitted:', form);
+      navigate('/');
+    } catch (error) {
+      console.error('Signup failed:', error);
+    }
   };
 
   return (
@@ -31,7 +39,7 @@ export default function LoginForm() {
         boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
       }}
     >
-      {['email', 'password'].map((f) => (
+      {['name', 'email', 'password'].map((f) => (
         <div key={f} style={{ marginBottom: '1rem' }}>
           <label
             style={{
@@ -60,7 +68,7 @@ export default function LoginForm() {
       <button
         type="submit"
         style={{
-          backgroundColor: '#2563eb',
+          backgroundColor: '#16a34a',
           color: 'white',
           padding: '0.5rem 1rem',
           border: 'none',
@@ -68,7 +76,7 @@ export default function LoginForm() {
           cursor: 'pointer',
         }}
       >
-        Sign In
+        Sign Up
       </button>
     </form>
   );
