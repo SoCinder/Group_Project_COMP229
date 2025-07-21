@@ -192,6 +192,17 @@ export default function SurveyPage() {
           </div>
         </form>
       </div>
+      <footer
+        style={{
+          textAlign: 'center',
+          padding: '1rem',
+          fontSize: '0.9rem',
+          color: '#888',
+          marginTop: '2rem',
+        }}
+      >
+        © True North Tech July 2025
+      </footer>
     </div>
   );
 };
