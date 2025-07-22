@@ -30,7 +30,8 @@ export default function LoginForm() {
         style={{
           maxWidth: '400px',
           margin: '1rem auto 2rem',
-          padding: '1rem',
+          padding: '1rem 2rem',
+          boxSizing: 'border-box',
           border: '1px solid #ccc',
           borderRadius: '8px',
           boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
@@ -79,7 +80,30 @@ export default function LoginForm() {
           Sign In
         </button>
 
-        <div style={{ textAlign: 'center' }}>
+        <div
+          style={{
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem',
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => navigate('/signUp')}
+            style={{
+              backgroundColor: '#6c757d',
+              color: 'white',
+              padding: '0.5rem 1rem',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              width: '100%',
+            }}
+          >
+            Sign Up here in case you do not have an account
+          </button>
+
           <button
             type="button"
             onClick={() => navigate('/')}
@@ -90,12 +114,14 @@ export default function LoginForm() {
               border: 'none',
               borderRadius: '6px',
               cursor: 'pointer',
+              width: '100%',
             }}
           >
             Back to Homepage
           </button>
         </div>
       </form>
+
       <footer
         style={{
           textAlign: 'center',

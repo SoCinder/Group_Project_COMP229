@@ -1,80 +1,87 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavigationBar from "./NavigationBar";
+import NavigationBar from './NavigationBar';
 
-export default function HomePage() {
+export default function Introduction() {
   const navigate = useNavigate();
 
   return (
     <div>
       <NavigationBar />
-
       <div
-        className="home-page"
+        className="introduction-page"
         style={{
-          display: 'flex',
-          justifyContent: 'center',
-          padding: '4rem 1rem',
+          maxWidth: '800px',
+          margin: '2rem auto',
+          padding: '1rem',
           fontFamily: 'sans-serif',
-          backgroundColor: '#f8f9fa',
         }}
       >
-        <div
+        <h1 style={{ textAlign: 'center', marginBottom: '1rem' }}>True North Tech</h1>
+
+        <p style={{ fontSize: '1.1rem', marginBottom: '2rem' }}>
+          We are conducting a study on Canadians' spending habits now vs. 2 years ago.
+          Your participation will help us understand how spending patterns have changed over time.
+        </p>
+
+        <h2 style={{ marginBottom: '1rem' }}>Team Members</h2>
+        <ul
           style={{
-            backgroundColor: 'white',
-            padding: '2rem',
-            borderRadius: '12px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-            maxWidth: '700px',
-            width: '100%',
-            textAlign: 'center',
+            lineHeight: '1.6',
+            listStyleType: 'disc',
+            paddingLeft: '1.5rem',
+            fontSize: '1rem',
+            marginBottom: '2rem',
           }}
         >
-          <h1 style={{ marginBottom: '1.5rem' }}>Welcome to True North Tech Survey</h1>
-          <p style={{ marginBottom: '2rem', fontSize: '1.2rem', color: '#333' }}>
-            Explore how Canadians' spending habits have changed. Start by visiting the introduction or jump right into the survey.
-          </p>
+          <li>Paolo Caparas (301116473)</li>
+          <li>Kefah Abbound (301258693)</li>
+          <li>Tien Minh Dang (301411970)</li>
+          <li>William Collinson (301305060)</li>
+        </ul>
 
-          <div
+        <h2 style={{ marginBottom: '0.5rem' }}>Why It Matters</h2>
+        <p style={{ fontSize: '1rem', marginBottom: '2rem' }}>
+          Your responses help paint a clearer picture of how economic shifts have affected everyday Canadians.
+          The insights from this survey could inform future research, business decisions, and even policy discussions.
+        </p>
+
+        <h2 style={{ marginBottom: '0.5rem' }}>Quick Statistics</h2>
+        <ul
+          style={{
+            fontSize: '1rem',
+            lineHeight: '1.6',
+            marginBottom: '2rem',
+            paddingLeft: '1.2rem',
+          }}
+        >
+          <li>📊 More than 1,500 people participated in the survey in the last 45 days</li>
+          <li>💸 95% report higher spending on groceries</li>
+          <li>🚗 80% reported higher transportation costs</li>
+        </ul>
+
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <button
+            onClick={() => navigate('/survey')}
             style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-              gap: '1rem',
+              padding: '1rem 2rem',
+              fontSize: '1rem',
+              cursor: 'pointer',
+              borderRadius: '8px',
+              border: 'none',
+              backgroundColor: '#28a745',
+              color: 'white',
             }}
           >
-            <button
-              onClick={() => navigate('/introduction')}
-              style={{
-                padding: '1rem 2rem',
-                fontSize: '1rem',
-                cursor: 'pointer',
-                borderRadius: '8px',
-                border: 'none',
-                backgroundColor: '#007bff',
-                color: 'white',
-              }}
-            >
-              Go to Introduction
-            </button>
-
-            <button
-              onClick={() => navigate('/survey')}
-              style={{
-                padding: '1rem 2rem',
-                fontSize: '1rem',
-                cursor: 'pointer',
-                borderRadius: '8px',
-                border: 'none',
-                backgroundColor: '#28a745',
-                color: 'white',
-              }}
-            >
-              Start Survey
-            </button>
-          </div>
+            Start Survey
+          </button>
         </div>
+
+        <p style={{ fontStyle: 'italic', textAlign: 'center' }}>
+          Thank you for visiting our survey. Use the navigation above or click the button to get started.
+        </p>
       </div>
+
       <footer
         style={{
           textAlign: 'center',

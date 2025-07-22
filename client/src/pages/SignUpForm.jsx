@@ -9,7 +9,6 @@ export default function SignUpForm() {
     name: '',
     email: '',
     password: '',
-    confirmPassword: '',
   });
 
   const handle = (e) => {
@@ -22,11 +21,6 @@ export default function SignUpForm() {
 
   const submit = async (e) => {
     e.preventDefault();
-
-    if (form.password !== form.confirmPassword) {
-      alert("Passwords do not match.");
-      return;
-    }
 
     try {
       // Optional: send data to your backend API
@@ -49,13 +43,14 @@ export default function SignUpForm() {
         style={{
           maxWidth: '400px',
           margin: '1rem auto 2rem',
-          padding: '1rem',
+          padding: '1rem 2rem',
+          boxSizing: 'border-box',
           border: '1px solid #ccc',
           borderRadius: '8px',
           boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
         }}
       >
-        {['name', 'email', 'password', 'confirmPassword'].map((f) => (
+        {['name', 'email', 'password'].map((f) => (
           <div key={f} style={{ marginBottom: '1rem' }}>
             <label
               style={{
@@ -64,10 +59,10 @@ export default function SignUpForm() {
                 fontWeight: '500',
               }}
             >
-              {f === 'confirmPassword' ? 'Re-enter Password' : f.charAt(0).toUpperCase() + f.slice(1)}
+              {f.charAt(0).toUpperCase() + f.slice(1)}
             </label>
             <input
-              type={f.includes('password') ? 'password' : 'text'}
+              type={f === 'password' ? 'password' : 'text'}
               name={f}
               value={form[f]}
               onChange={handle}
@@ -115,6 +110,7 @@ export default function SignUpForm() {
           </button>
         </div>
       </form>
+
       <footer
         style={{
           textAlign: 'center',

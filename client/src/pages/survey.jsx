@@ -10,6 +10,9 @@ export default function SurveyPage() {
   const [dining, setDining] = useState('');
   const [transport, setTransport] = useState('');
   const [savings, setSavings] = useState('');
+  const [housing, setHousing] = useState('');
+  const [mentalHealth, setMentalHealth] = useState('');
+  const [majorPurchases, setMajorPurchases] = useState('');
 
   const navigate = useNavigate();
 
@@ -23,24 +26,25 @@ export default function SurveyPage() {
         { value: groceries },
         { value: dining },
         { value: transport },
-        { value: savings }
+        { value: savings },
+        { value: housing },
+        { value: mentalHealth },
+        { value: majorPurchases },
       ]
     };
 
     try {
-    const res = await axios.post(
-      'http://localhost:5000/api/surveys/68759ebb708e5b75333c5b5d/response',
-      responses
-    );
+      const res = await axios.post(
+        'http://localhost:5000/api/surveys/68759ebb708e5b75333c5b5d/response',
+        responses
+      );
 
-    console.log('Response submitted:', res.data);
-
-    // Navigate to thank you page
-    navigate('/thank-you');
-  } catch (err) {
-    console.error('Error submitting response:', err.response?.data || err.message);
-  }
-};
+      console.log('Response submitted:', res.data);
+      navigate('/thank-you');
+    } catch (err) {
+      console.error('Error submitting response:', err.response?.data || err.message);
+    }
+  };
 
   return (
     <div>
@@ -50,6 +54,7 @@ export default function SurveyPage() {
           Canadians Spending Habits: Now vs. 2 Years Ago
         </h1>
         <form onSubmit={handleSubmit}>
+          
           <div className="form-group" style={{ border: 'none', marginBottom: '1.5rem' }}>
             <label htmlFor="salary" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
               1. What is your yearly salary?
@@ -155,7 +160,7 @@ export default function SurveyPage() {
             ))}
           </fieldset>
 
-          <fieldset className="form-group" style={{ border: 'none', marginBottom: '2rem' }}>
+          <fieldset className="form-group" style={{ border: 'none', marginBottom: '1.5rem' }}>
             <legend style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
               6. Has the proportion of your income that you save or invest monthly changed over the past two years?
             </legend>
@@ -172,6 +177,71 @@ export default function SurveyPage() {
                 /> {option.charAt(0).toUpperCase() + option.slice(1)}
               </label>
             ))}
+          </fieldset>
+
+          <fieldset className="form-group" style={{ border: 'none', marginBottom: '1.5rem' }}>
+            <legend style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
+              7. How have your monthly housing costs (rent or mortgage) changed over the past two years?
+            </legend>
+            {['increased significantly', 'increased slightly', 'no change', 'decreased slightly', 'decreased significantly'].map(option => (
+              <label key={option} style={{ display: 'block', marginBottom: '0.5rem' }}>
+                <input
+                  type="radio"
+                  name="housing"
+                  value={option}
+                  checked={housing === option}
+                  onChange={e => setHousing(e.target.value)}
+                  required
+                  style={{ marginRight: '0.5rem' }}
+                /> {option.charAt(0).toUpperCase() + option.slice(1)}
+              </label>
+            ))}
+          </fieldset>
+
+          <fieldset className="form-group" style={{ border: 'none', marginBottom: '1.5rem' }}>
+            <legend style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
+              8. How has your financial situation affected your mental health in the past two years?
+            </legend>
+            {['much worse', 'somewhat worse', 'no change', 'somewhat better', 'much better'].map(option => (
+              <label key={option} style={{ display: 'block', marginBottom: '0.5rem' }}>
+                <input
+                  type="radio"
+                  name="mentalHealth"
+                  value={option}
+                  checked={mentalHealth === option}
+                  onChange={e => setMentalHealth(e.target.value)}
+                  required
+                  style={{ marginRight: '0.5rem' }}
+                /> {option.charAt(0).toUpperCase() + option.slice(1)}
+              </label>
+            ))}
+          </fieldset>
+
+          <fieldset className="form-group" style={{ border: 'none', marginBottom: '2rem' }}>
+            <legend style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
+              9. Have you postponed any major purchases (e.g., car, appliances) in the past two years due to financial difficulties?
+            </legend>
+            <label style={{ display: 'block', marginBottom: '0.5rem' }}>
+              <input
+                type="radio"
+                name="majorPurchases"
+                value="yes"
+                checked={majorPurchases === 'yes'}
+                onChange={e => setMajorPurchases(e.target.value)}
+                required
+                style={{ marginRight: '0.5rem' }}
+              /> Yes
+            </label>
+            <label style={{ display: 'block', marginBottom: '0.5rem' }}>
+              <input
+                type="radio"
+                name="majorPurchases"
+                value="no"
+                checked={majorPurchases === 'no'}
+                onChange={e => setMajorPurchases(e.target.value)}
+                style={{ marginRight: '0.5rem' }}
+              /> No
+            </label>
           </fieldset>
 
           <div style={{ textAlign: 'center' }}>
@@ -206,4 +276,3 @@ export default function SurveyPage() {
     </div>
   );
 };
-
