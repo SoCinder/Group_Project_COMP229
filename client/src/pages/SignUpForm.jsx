@@ -1,48 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from './NavigationBar';
+import { AuthContext } from '../context/AuthContext';
 
 export default function SignUpForm() {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
   const [form, setForm] = useState({
-    name: '',
+    username: '',
     email: '',
     password: '',
   });
+  const [error, setError] = useState('');
 
   const handle = (e) => {
     const { name, value } = e.target;
-    setForm((prevForm) => ({
-      ...prevForm,
-      [name]: value,
-    }));
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const submit = async (e) => {
     e.preventDefault();
-
+    setError('');
     try {
-      // Optional: send data to your backend API
-      // await axios.post('http://localhost:5000/api/users', form);
-
-      console.log('Form submitted:', form);
-      navigate('/');
-    } catch (error) {
-      console.error('Signup failed:', error);
+      // Send signup data to backend (via proxy)
+      const { data } = await axios.post('/api/auth/signup', form);
+      // On success, store token & user in context
+      login({ token: data.token, user: data.user || null });
+      // Redirect to a protected route
+      navigate('/survey');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Signup failed, please try again.');
     }
   };
 
   return (
     <div>
       <NavigationBar />
-      <h2 style={{ textAlign: 'center', fontFamily: 'sans-serif', marginTop: '2rem' }}>Sign Up</h2>
+      <h2 style={{ textAlign: 'center', marginTop: '2rem' }}>Sign Up</h2>
 
       <form
         onSubmit={submit}
         style={{
           maxWidth: '400px',
-          margin: '1rem auto 2rem',
+          margin: '1rem auto',
           padding: '1rem 2rem',
           boxSizing: 'border-box',
           border: '1px solid #ccc',
@@ -50,21 +51,23 @@ export default function SignUpForm() {
           boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
         }}
       >
-        {['name', 'email', 'password'].map((f) => (
-          <div key={f} style={{ marginBottom: '1rem' }}>
+        {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+
+        {['username', 'email', 'password'].map((field) => (
+          <div key={field} style={{ marginBottom: '1rem' }}>
             <label
               style={{
                 display: 'block',
                 marginBottom: '0.5rem',
-                fontWeight: '500',
+                fontWeight: 500,
               }}
             >
-              {f.charAt(0).toUpperCase() + f.slice(1)}
+              {field.charAt(0).toUpperCase() + field.slice(1)}
             </label>
             <input
-              type={f === 'password' ? 'password' : 'text'}
-              name={f}
-              value={form[f]}
+              type={field === 'password' ? 'password' : 'text'}
+              name={field}
+              value={form[field]}
               onChange={handle}
               required
               style={{
@@ -80,47 +83,38 @@ export default function SignUpForm() {
         <button
           type="submit"
           style={{
+            width: '100%',
+            padding: '0.75rem',
             backgroundColor: '#16a34a',
-            color: 'white',
-            padding: '0.5rem 1rem',
+            color: '#fff',
             border: 'none',
             borderRadius: '6px',
             cursor: 'pointer',
-            width: '100%',
-            marginBottom: '1rem',
           }}
         >
-          Sign Up
+          Create Account
         </button>
 
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: 'center', marginTop: '1rem' }}>
           <button
             type="button"
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/login')}
             style={{
               backgroundColor: '#007bff',
-              color: 'white',
+              color: '#fff',
               padding: '0.5rem 1rem',
               border: 'none',
               borderRadius: '6px',
               cursor: 'pointer',
             }}
           >
-            Back to Homepage
+            Already have an account? Log In
           </button>
         </div>
       </form>
 
-      <footer
-        style={{
-          textAlign: 'center',
-          padding: '1rem',
-          fontSize: '0.9rem',
-          color: '#888',
-          marginTop: '2rem',
-        }}
-      >
-        © True North Tech July 2025
+      <footer style={{ textAlign: 'center', padding: '1rem', color: '#888', marginTop: '2rem' }}>
+        © True North Tech July 2025
       </footer>
     </div>
   );
