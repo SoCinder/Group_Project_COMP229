@@ -19,12 +19,14 @@ export default function SignUpForm() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  const API = import.meta.env.VITE_API_URL;
+
   const submit = async (e) => {
     e.preventDefault();
     setError('');
     try {
       // Send signup data to backend (via proxy)
-      const { data } = await axios.post('/api/auth/signup', form);
+      const { data } = await axios.post(`${API}/api/auth/signup`, form);
       // On success, store token & user in context
       login({ token: data.token, user: data.user || null });
       // Redirect to a protected route

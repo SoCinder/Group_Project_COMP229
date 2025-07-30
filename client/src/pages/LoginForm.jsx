@@ -15,12 +15,14 @@ export default function LoginForm() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  const API = import.meta.env.VITE_API_URL;
+
   const submit = async (e) => {
     e.preventDefault();
     setError('');
     try {
       // proxy to http://localhost:5000/api/auth/login
-      const { data } = await axios.post('/api/auth/login', form);
+      const { data } = await axios.post(`${API}/api/auth/login`, form);
 
       // persist the JWT & user
       login({ token: data.token, user: data.user || null });

@@ -34,10 +34,11 @@ export default function SurveyPage() {
     };
 
     try {
+      const API = import.meta.env.VITE_API_URL;
+
       const res = await axios.post(
-        'http://localhost:5000/api/surveys/68759ebb708e5b75333c5b5d/response',
-        responses
-      );
+      `${API}/api/surveys/68759ebb708e5b75333c5b5d/response`,
+      responses);
 
       console.log('Response submitted:', res.data);
       navigate('/thank-you');
