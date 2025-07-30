@@ -16,7 +16,7 @@ const allowedOrigins = [
 const app = express();
 app.use(cors({
   origin: allowedOrigins,
-  credentials: true // ✅ if you're using cookies or auth headers like JWT
+  credentials: true // if you're using cookies or auth headers like JWT
 }));
 app.use(express.json());
 
