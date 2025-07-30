@@ -8,8 +8,16 @@ const authRoutes = require('./routes/authRoutes');
 dotenv.config();
 connectDB();
 
+const allowedOrigins = [
+  'http://localhost:5173', // Vite dev
+  'https://group-project-comp229-frontend.onrender.com', // Render deployed frontend
+];
+
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true // ✅ if you're using cookies or auth headers like JWT
+}));
 app.use(express.json());
 
 // routes
