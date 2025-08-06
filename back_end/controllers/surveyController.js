@@ -1,23 +1,26 @@
 const Survey = require('../models/Survey');
 
 // POST /api/surveys
+// allows frontend to submit new survey to backend API
 exports.createSurvey = async (req, res) => {
   try {
     const survey = new Survey(req.body);
-    await survey.save();
+    await survey.save(); // if valid - store to mongodb
     res.status(201).json(survey);
   } catch (err) {
     res.status(400).json({ message: err.message });
-  }
+  } // if invalid return response error
 };
 
 // GET /api/surveys
+// allows frontend to retrive all surveys stored in database
 exports.getSurveys = async (req, res) => {
   const surveys = await Survey.find();
   res.json(surveys);
 };
 
 // GET /api/surveys/:id
+// retrieves specific survey by ID
 exports.getSurveyById = async (req, res) => {
   try {
     const survey = await Survey.findById(req.params.id);
@@ -29,6 +32,7 @@ exports.getSurveyById = async (req, res) => {
 };
 
 // PUT /api/surveys/:id
+// lets client edit a survey using ID
 exports.updateSurvey = async (req, res) => {
   try {
     const survey = await Survey.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -39,6 +43,7 @@ exports.updateSurvey = async (req, res) => {
 };
 
 // DELETE /api/surveys/:id
+// lets admin delete survey by ID
 exports.deleteSurvey = async (req, res) => {
   try {
     await Survey.findByIdAndDelete(req.params.id);
@@ -48,6 +53,7 @@ exports.deleteSurvey = async (req, res) => {
   }
 };
 
+//lets user submit answer to a specific survey
 exports.submitSurveyResponse = async (req, res) => {
   const surveyId = req.params.id;
   const { answers } = req.body;

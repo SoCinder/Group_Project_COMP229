@@ -11,14 +11,13 @@ const {
 const router = express.Router();
 
 router.route('/')
-  .post(createSurvey)
-  .get(getSurveys);
+  .post(createSurvey) // /api/surveys	Create a new survey
+  .get(getSurveys); // 	/api/surveys	Get all surveys
 
 router.route('/:id')
-  .get(getSurveyById)
-  .put(updateSurvey)
-  .delete(deleteSurvey);
+  .get(getSurveyById) // /api/surveys/:id	Get one survey by ID
+  .put(updateSurvey) // /api/surveys/:id	Update a survey
+  .delete(deleteSurvey); // /api/surveys/:id	Delete a survey
 
-router.post('/:id/response', submitSurveyResponse);
-
+router.post('/:id/response', submitSurveyResponse); // /api/surveys/:id/response	Submit answers to a survey
 module.exports = router;
